@@ -1,11 +1,19 @@
 import { View, Text } from 'react-native'
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const insights = () => {
+const Insights = () => {
+  const insets = useSafeAreaInsets();
+
   return (
-    <View>
-      <Text>insights</Text>
+    <View
+      style={{
+        flex: 1,
+        paddingTop: insets.top,
+      }}
+    >
+      <Text>Insights</Text>
     </View>
-  )
+  );
 }
 
-export default insights
+export default Insights
