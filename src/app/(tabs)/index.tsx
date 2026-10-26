@@ -1,18 +1,38 @@
-import { Link } from "expo-router";
 import {styled} from "nativewind"
 import { NativeTabs } from "expo-router/build/native-tabs/NativeTabs.js";
-import { Text, View } from "react-native";
+import { Text} from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
+import { Link } from "expo-router";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
 export default function App() {
   return (
-    <SafeAreaView className="flex-1 items-center justify-center bg-background">
+    <SafeAreaView className="flex-1 bg-background p-5">
       <NativeTabs.Trigger>
         <NativeTabs.Trigger.Label>Index</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
-      <Text>This is Home Screen</Text>
+      <Text className="text-5xl font-sans-extrabold">Home</Text>
+
+      <Link
+        href="/onboarding"
+        className="mt-4 font-sans-bold rounded bg-primary text-white p-4"
+      >
+        Go to Onboarding
+      </Link>
+      <Link
+        href="/(auth)/sign-in"
+        className="mt-4 font-sans-bold rounded bg-primary text-white p-4"
+      >
+        Go to Sign In
+      </Link>
+      <Link
+        href="/(auth)/sign-up"
+        className="mt-4 font-sans-bold rounded bg-primary text-white p-4"
+      >
+        Go to Sign Up
+      </Link>
+
     </SafeAreaView>
   );
 }

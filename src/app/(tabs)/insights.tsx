@@ -9,7 +9,7 @@ const SafeAreaView = styled(RNSafeAreaView);
 const Insights = () => {
 
   return (
-    <SafeAreaView className="flex bg-background">
+    <SafeAreaView className="flex bg-background p-5">
       <NativeTabs.Trigger>
         <NativeTabs.Trigger.Label>Index</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
