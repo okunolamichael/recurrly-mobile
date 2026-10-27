@@ -1,6 +1,13 @@
-import { Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 import "@/global.css";
+import { useAuth } from "@clerk/expo";
+import { AuthLoadingView } from "@/components/auth-ui";
 
 export default function RootLayout() {
-  return <Stack screenOptions={{headerShown: false}}/>;
+  const { isLoaded, isSignedIn } = useAuth();
+
+  if (!isLoaded) return <AuthLoadingView />;
+  if (isSignedIn) return <Redirect href="/(tabs)" />;
+
+  return <Stack screenOptions={{ headerShown: false }} />;
 }
