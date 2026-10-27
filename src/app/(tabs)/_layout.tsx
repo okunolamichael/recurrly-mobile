@@ -1,8 +1,14 @@
 import { NativeTabs } from "expo-router/native-tabs";
-
-
+import { Redirect } from "expo-router";
+import { useAuth } from "@clerk/expo";
+import { AuthLoadingView } from "@/components/auth-ui";
 
 export default function TabLayout() {
+  const { isLoaded, isSignedIn } = useAuth();
+
+  if (!isLoaded) return <AuthLoadingView />;
+  if (!isSignedIn) return <Redirect href="/(auth)/sign-in" />;
+
   return (
       <NativeTabs
         badgeBackgroundColor="#EF4444"

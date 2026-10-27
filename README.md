@@ -16,6 +16,17 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npx expo start
    ```
 
+## Authentication setup
+
+The app uses a Clerk instance for email and password authentication. Set
+`EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY` in a local `.env` file, then enable email
+and password sign-up with email verification codes in the Clerk Dashboard.
+Enable the Native API for Expo/React Native clients. To allow email-only
+sign-up, do not require a phone number during registration. Phone numbers can
+be added and verified later from Settings; enable phone numbers in Clerk if
+you want to offer that option. Restart Expo after changing the environment
+file.
+
 In the output, you'll find options to open the app in a
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)

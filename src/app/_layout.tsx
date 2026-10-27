@@ -1,14 +1,24 @@
 import { Stack } from "expo-router";
 import "@/global.css";
+import { ClerkProvider } from "@clerk/expo";
+import { tokenCache } from "@clerk/expo/token-cache";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
 
-export const unstable_settings = {
-  initialRouteName: "(tabs)",
-};
-
 void SplashScreen.preventAutoHideAsync();
+
+function getPublishableKey(): string {
+  const key = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  if (!key) {
+    throw new Error(
+      "Set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env file to enable sign-in.",
+    );
+  }
+  return key;
+}
+
+const publishableKey = getPublishableKey();
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -40,5 +50,9 @@ export default function RootLayout() {
     return null;
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+      <Stack screenOptions={{ headerShown: false }} />
+    </ClerkProvider>
+  );
 }
