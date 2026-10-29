@@ -7,7 +7,17 @@ const SafeAreaView = styled(RNSafeAreaView);
 const subscription = () => {
   return (
     <SafeAreaView>
-      <Text>subscription</Text>
+      <View>
+        <Text>
+          Subscription
+        </Text>
+      </View>
+
+      <View>
+        <Text>
+          Content
+        </Text>
+      </View>
     </SafeAreaView>
   )
 }
