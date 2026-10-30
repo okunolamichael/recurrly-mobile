@@ -1,16 +1,28 @@
 
-import { Link, useLocalSearchParams } from 'expo-router'
-import { View, Text } from 'react-native'
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { Text, View } from "react-native";
+import GlassIconButton from "@/components/GlassIconButton";
 
 const SubscriptionDetails = () => {
-    const {id} = useLocalSearchParams<{id: string}>();
-    
-  return (
-    <View>
-      <Text> subscription Details: {id}</Text>
-      <Link href="/">Go back</Link>
-    </View>
-  )
-}
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
 
-export default SubscriptionDetails
+  return (
+    <View className="flex-1 bg-background p-5">
+      <GlassIconButton
+        accessibilityLabel="Go back"
+        name={{
+          ios: "chevron.left",
+          android: "arrow_back",
+          web: "arrow_back",
+        }}
+        onPress={() => router.back()}
+      />
+      <Text className="mt-6 font-sans-bold text-2xl text-primary">
+        Subscription details: {id}
+      </Text>
+    </View>
+  );
+};
+
+export default SubscriptionDetails;

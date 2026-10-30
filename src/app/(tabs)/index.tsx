@@ -1,6 +1,4 @@
-import {styled} from "nativewind"
-import { FlatList, Image, Text, View} from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
+import { FlatList, Image, Pressable, Text, View} from "react-native";
 import images from "@/constants/images";
 import { HOME_BALANCE, HOME_SUBSCRIPTIONS, HOME_USER, UPCOMING_SUBSCRIPTIONS } from "@/constants/data";
 import { icons } from "@/constants/icons";
@@ -10,27 +8,17 @@ import ListHeading from "@/components/ListHeading";
 import UpcomingSubscriptionCard from "@/components/UpcomingSubscriptionCard";
 import SubscriptionCard from "@/components/SubscriptionCard";
 import { useState } from "react";
-
-const SafeAreaView = styled(RNSafeAreaView);
+import CreateSubscriptionModal from "@/components/CreateSubscriptionModal";
 
 export default function App() {
   const [expandedSubscriptionId, setExpandedSubscriptionId] = useState <string | null>(null);
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>(() => [
+    ...HOME_SUBSCRIPTIONS,
+  ]);
+  const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
+
   return (
-    // <SafeAreaView className="flex-1 bg-background p-5">
-
-    // // This is for fixed header-- starts
-    // <View>
-    //   <View className="home-header pt-12 px-2">
-    //     <View className="home-user">
-    //       <Image source={images.avatar} className="home-avatar" />
-    //       <Text className="home-user-name">{HOME_USER.name}</Text>
-    //     </View>
-
-    //     <Image source={icons.add} className="home-add-icon" />
-    //   </View>
-
-    //   {/* Ends */}
-
+    <>
       <FlatList
         className="py-3 px-2"
         ListHeaderComponent={() => (
@@ -41,7 +29,13 @@ export default function App() {
                 <Text className="home-user-name">{HOME_USER.name}</Text>
               </View>
 
-              <Image source={icons.add} className="home-add-icon" />
+              <Pressable
+                accessibilityLabel="Add subscription"
+                accessibilityRole="button"
+                onPress={() => setIsCreateModalVisible(true)}
+              >
+                <Image source={icons.add} className="home-add-icon" />
+              </Pressable>
             </View>
 
             <View className="home-balance-card">
@@ -80,7 +74,7 @@ export default function App() {
             <ListHeading title="All Subscriptions" />
           </>
         )}
-        data={HOME_SUBSCRIPTIONS}
+        data={subscriptions}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <SubscriptionCard
@@ -100,7 +94,17 @@ export default function App() {
           <Text className="home-empty-state">No subscription yet.</Text>
         }
       />
-    // </View>
-    // </SafeAreaView>
+      <CreateSubscriptionModal
+        onClose={() => setIsCreateModalVisible(false)}
+        onCreate={(subscription) => {
+          setSubscriptions((currentSubscriptions) => [
+            subscription,
+            ...currentSubscriptions,
+          ]);
+          setExpandedSubscriptionId(null);
+        }}
+        visible={isCreateModalVisible}
+      />
+    </>
   );
 }
